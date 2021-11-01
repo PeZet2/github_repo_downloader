@@ -10,8 +10,8 @@ from urllib.request import urlopen
 from pathlib import Path
 from github import Github
 
-USER='PeZet2'
-access_token='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'
+USER="PeZet2"
+access_token=""
 
 home = f"{Path.home()}"
 download_dir=f"{home}/archive/github"
