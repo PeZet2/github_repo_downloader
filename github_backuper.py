@@ -14,20 +14,24 @@ USER="PeZet2"
 access_token=""
 
 home = f"{Path.home()}"
-download_dir=f"{home}/archive/github"
+archive_dir=f"{home}/archive"
+download_dir=f"{archive_dir}/github"
 download_repo_list_file=f"{download_dir}/repo_list.txt"
-log_dir = f"{home}/log/github"
-log_file=f"{log_dir}/get_github.log"
+log_dir = f"{home}/log"
+log_file=f"{log_dir}/github_backuper.log"
 
 g = Github(access_token)
 
 master_branch="master"
 main_branch="main"
 
-def saveLog(stri):
+def saveLog(stri, ts=True):
     tm = datetime.datetime.now()
     strtm = tm.strftime("%Y-%m-%d %H:%M:%S")
-    message = f"[{strtm}]: {stri}"
+    if ts == True:
+        message = f"[{strtm}]: {stri}"
+    else:
+        message = f"{stri}"
     with open(log_file, 'a') as f:
         print(message, end='\n', file=f)
 
@@ -71,11 +75,13 @@ def download_repo(repo_name:str, url:str):
 #Utworzenie lokalizacji dla logow
 create_dir(log_dir)
 
-saveLog("$###################################")
-saveLog(f"Creating GitHub backup for {USER}")
-
 # Utworzenie lokalizacji archiwum
+create_dir(archive_dir)
 create_dir(download_dir)
+
+saveLog("###########################################################", ts=False)
+saveLog("####################################")
+saveLog(f"Creating GitHub backup for {USER}")
 
 # Pobranie listy repozytoriów z GitHub
 repo_list=get_repo_list()
