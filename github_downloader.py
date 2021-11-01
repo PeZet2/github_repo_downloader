@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 #############################
 ## https://github.com/PeZet2
 #############################
@@ -6,28 +7,34 @@
 import os
 import datetime
 from urllib.request import urlopen
+from pathlib import Path
 from github import Github
 
-USER='YOUR_USERNAME'
-access_token='GENERATED_GITHUB_ACCESS_TOKEN'
-download_dir='DOWNLOAD_DIR'
-download_repo_list_file=download_dir + '/repo_list.txt'
-log_file='LOGFILE.LOG'
+USER='PeZet2'
+access_token='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'
+
+home = f"{Path.home()}"
+download_dir=f"{home}/archive/github"
+download_repo_list_file=f"{download_dir}/repo_list.txt"
+log_dir = f"{home}/log/github"
+log_file=f"{log_dir}/get_github.log"
 
 g = Github(access_token)
 
+master_branch="master"
+main_branch="main"
 
 def saveLog(stri):
     tm = datetime.datetime.now()
     strtm = tm.strftime("%Y-%m-%d %H:%M:%S")
+    message = f"[{strtm}]: {stri}"
     with open(log_file, 'a') as f:
-        print("["+strtm+"]: "+stri, end='\n', file=f)
+        print(message, end='\n', file=f)
 
 
-def create_archive_dir(a_dir: str):
+def create_dir(a_dir: str):
     if (not os.path.isdir(a_dir)):
         os.mkdir(a_dir)
-        saveLog(f"Created archive directory at {download_dir}")
 
 
 def get_repo_list() -> list:
@@ -40,7 +47,7 @@ def delete_file(file_name: str):
             os.remove(file_name)
 
 
-def save_repo_list_to_a_file(repo_list: list, repo_list_file: str):
+def save_repo_to_a_file(repo_list: list, repo_list_file: str):
     delete_file(repo_list_file)
     with open(repo_list_file, 'at') as f:
         saveLog(f"Saving download urls for all repos to {repo_list_file}...")
@@ -61,11 +68,14 @@ def download_repo(repo_name:str, url:str):
 
 
 
+#Utworzenie lokalizacji dla logow
+create_dir(log_dir)
+
 saveLog("$###################################")
 saveLog(f"Creating GitHub backup for {USER}")
 
 # Utworzenie lokalizacji archiwum
-create_archive_dir(download_dir)
+create_dir(download_dir)
 
 # Pobranie listy repozytoriów z GitHub
 repo_list=get_repo_list()
@@ -75,7 +85,7 @@ if (len(repo_list) == 0):
     exit(1)
 
 # Zapisanie linków pobierających repozytoria do pliku
-save_repo_list_to_a_file(repo_list, download_repo_list_file)
+save_repo_to_a_file(repo_list, download_repo_list_file)
 
 # Pobieranie repozytoriów do archiwum
 for r in repo_list:
@@ -83,5 +93,3 @@ for r in repo_list:
 
 
 saveLog("End of script")
-
-
