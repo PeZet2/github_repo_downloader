@@ -1,20 +1,15 @@
-# github_repo_downloader
-Script that allows you to download all of your github repos.
+# Github repo downloader
+Script that allows you to download all of users github repos.
 
-Variables to fill inside this script:
+Repositories are downloaded as bare files without commit history compressed to a zip archive.
 
-#Github username, that you wish to download their repo.
+##Description
+Default location is your home directory
+- ~/archive/github
+- ~/log/git_hub_repo_downloader.txt
 
-USER='YOUR_USERNAME' 
-
-#access_token allowing to read private repos
-
-access_token='GENERATED_GITHUB_ACCESS_TOKEN'
-
-#directory for downloaded repos 
-
-download_dir='DOWNLOAD_DIR'
-
-#full path for log file
-
-log_file='LOGFILE.LOG'
+## Parameters
+|parameters     |description                        |
+|:--------------|:----------------------------------|
+|--user         |repository user                    |
+|--access_token |token used for user authentication |
