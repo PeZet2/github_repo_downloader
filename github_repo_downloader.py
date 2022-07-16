@@ -12,12 +12,12 @@ from urllib.request import urlopen
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Parse input parameters')
-    parser.add_argument('--user',
-                        type=str,
+    parser.add_argument('-u', '--user',
+                        required=True,
                         help='Github username'
                         )
-    parser.add_argument('--access_token',
-                        type=str,
+    parser.add_argument('-t', '--access_token',
+                        required=True,
                         help='Access token for private repositories'
                         )
     return parser.parse_args()
