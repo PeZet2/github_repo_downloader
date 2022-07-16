@@ -105,11 +105,11 @@ def main():
 
 if __name__ == "__main__":
     home = f"{Path.home()}"
-    archive_dir = f"{home}/archive"
-    download_dir = f"{archive_dir}/github"
-    download_repo_list_file = f"{download_dir}/repo_list.txt"
-    log_dir = f"{home}/log"
-    log_file = f"{log_dir}/{argv[0]}.log"
+    archive_dir = os.path.join(f"{home}", "archive")
+    download_dir = os.path.join(f"{archive_dir}", "github")
+    download_repo_list_file = os.path.join(f"{download_dir}", "repo_list.txt")
+    log_dir = os.path.join(f"{home}", "log")
+    log_file = os.path.join(f"{log_dir}", f"{os.path.splitext(os.path.basename(argv[0]))[0]}.log")
 
     args = parse_args()
     main()
