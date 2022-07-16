@@ -3,6 +3,7 @@
 # https://github.com/PeZet2
 ############################
 import os
+from sys import argv
 import datetime
 import argparse
 from pathlib import Path
@@ -30,6 +31,7 @@ def save_log(stri, ts=True):
         message = f"[{strtm}]: {stri}"
     else:
         message = f"{stri}"
+    print(message, end='\n')
     with open(log_file, 'a') as f:
         print(message, end='\n', file=f)
 
@@ -107,7 +109,7 @@ if __name__ == "__main__":
     download_dir = f"{archive_dir}/github"
     download_repo_list_file = f"{download_dir}/repo_list.txt"
     log_dir = f"{home}/log"
-    log_file = f"{log_dir}/github_backuper.log"
+    log_file = f"{log_dir}/{argv[0]}.log"
 
     args = parse_args()
     main()
